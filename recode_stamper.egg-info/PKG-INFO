@@ -1,0 +1,93 @@
+Metadata-Version: 2.4
+Name: recode-stamper
+Version: 0.1.2
+Summary: Encode and decode UTF-8 strings into a 12- or 24-word RECODE mnemonic.
+Author-email: avra911 <java-hug-circulate@duck.com>
+License: MIT License
+        
+        Copyright (c) 2026
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Keywords: recode,mnemonic,cli,encoding,python
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Security :: Cryptography
+Classifier: Topic :: Utilities
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: license-file
+
+# Recode Stamper
+
+A small Python utility that encodes UTF-8 text into a 12- or 24-word mnemonic (RECODE) and decodes it back.
+
+## Install from PyPI
+
+```bash
+pip install recode-stamper==0.1.2
+```
+
+## How to run
+
+After installation, use the CLI entry point:
+
+```bash
+recode --encode "MyPassword123!"
+```
+
+```bash
+recode --decode "artist scavenge intimate airdrop humdrum curfew hexagon candy comedy bunion brevity aardvark"
+```
+
+Subcommands also work:
+
+```bash
+recode encode "MyPassword123!"
+recode decode "artist scavenge intimate airdrop humdrum curfew hexagon candy comedy bunion brevity aardvark"
+```
+
+Show help:
+
+```bash
+recode --help
+```
+
+If you are running directly from the repository checkout instead of the installed package:
+
+```bash
+python recode.py --encode "MyPassword123!"
+python recode.py --decode "artist scavenge intimate airdrop humdrum curfew hexagon candy comedy bunion brevity aardvark"
+```
+
+## Wordlist source
+
+The file `wordlist4096.txt` is based on the public wordlist from:
+
+https://raw.githubusercontent.com/kklash/wordlist4096/main/wordlist4096.txt
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for the full text.
+
+The included wordlist is derived from the upstream source referenced above. Please check the original repository and license terms for the wordlist itself before using it in production or redistribution.
+
+This repository does not claim to replace or relicense the upstream wordlist; it only references the source used for the local copy included here.

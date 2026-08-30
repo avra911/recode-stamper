@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "recode-stamper"
+version = "0.1.2"
+description = "Encode and decode UTF-8 strings into a 12- or 24-word RECODE mnemonic."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [
+  { name="avra911", email="java-hug-circulate@duck.com" },
+]
+keywords = ["recode", "mnemonic", "cli", "encoding", "python"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Topic :: Security :: Cryptography",
+  "Topic :: Utilities",
+]
+
+[project.scripts]
+recode = "recode_stamper:main"
+recode-stamper = "recode_stamper:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["recode_stamper*"]

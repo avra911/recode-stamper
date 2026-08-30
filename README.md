@@ -2,31 +2,42 @@
 
 A small Python utility that encodes UTF-8 text into a 12- or 24-word mnemonic (RECODE) and decodes it back.
 
+## Install from PyPI
+
+```bash
+pip install recode-stamper==0.1.2
+```
+
 ## How to run
 
-Encode a string:
+After installation, use the CLI entry point:
 
 ```bash
-python recode.py --encode "MyPassword123!"
+recode --encode "MyPassword123!"
 ```
 
-Decode a mnemonic:
-
 ```bash
-python recode.py --decode "artist scavenge intimate airdrop humdrum curfew hexagon candy comedy bunion brevity aardvark"
+recode --decode "artist scavenge intimate airdrop humdrum curfew hexagon candy comedy bunion brevity aardvark"
 ```
 
-Also works with subcommands:
+Subcommands also work:
 
 ```bash
-python recode.py encode "MyPassword123!"
-python recode.py decode "artist scavenge intimate airdrop humdrum curfew hexagon candy comedy bunion brevity aardvark"
+recode encode "MyPassword123!"
+recode decode "artist scavenge intimate airdrop humdrum curfew hexagon candy comedy bunion brevity aardvark"
 ```
 
 Show help:
 
 ```bash
-python recode.py --help
+recode --help
+```
+
+If you are running directly from the repository checkout instead of the installed package:
+
+```bash
+python recode.py --encode "MyPassword123!"
+python recode.py --decode "artist scavenge intimate airdrop humdrum curfew hexagon candy comedy bunion brevity aardvark"
 ```
 
 ## Wordlist source

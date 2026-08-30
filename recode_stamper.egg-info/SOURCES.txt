@@ -1,0 +1,11 @@
+LICENSE
+MANIFEST.in
+README.md
+pyproject.toml
+recode_stamper/__init__.py
+recode_stamper/wordlist4096.txt
+recode_stamper.egg-info/PKG-INFO
+recode_stamper.egg-info/SOURCES.txt
+recode_stamper.egg-info/dependency_links.txt
+recode_stamper.egg-info/entry_points.txt
+recode_stamper.egg-info/top_level.txt

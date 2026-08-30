@@ -1,0 +1,3 @@
+[console_scripts]
+recode = recode_stamper:main
+recode-stamper = recode_stamper:main
