@@ -15,6 +15,7 @@ The script encodes UTF-8 text into a 12- or 24-word mnemonic and decodes it back
 import argparse
 import hashlib
 from pathlib import Path
+import getpass
 
 
 class Recode:
@@ -675,6 +676,24 @@ def parse_mnemonic_input(raw_text):
     ]
 
 
+def prompt_mnemonic_input():
+    """Prompt for each mnemonic word without echoing it."""
+
+    raw_count = input("Number of mnemonic words (12 or 24): ")
+    try:
+        word_count = int(raw_count)
+    except ValueError:
+        raise ValueError("Mnemonic must contain 12 or 24 words")
+
+    if word_count not in (12, 24):
+        raise ValueError("Mnemonic must contain 12 or 24 words")
+
+    return [
+        getpass.getpass(f"Word {position}/{word_count}: ")
+        for position in range(1, word_count + 1)
+    ]
+
+
 def build_parser():
     """Create the command-line parser."""
 
@@ -685,6 +704,8 @@ def build_parser():
     parser.add_argument(
         "--encode",
         dest="encode_text",
+        nargs="?",
+        const="",
         help="UTF-8 string to encode into mnemonic words",
         metavar="TEXT",
     )
@@ -692,6 +713,8 @@ def build_parser():
     parser.add_argument(
         "--decode",
         dest="decode_text",
+        nargs="?",
+        const="",
         help="Mnemonic phrase to decode back into a UTF-8 string",
         metavar="TEXT",
     )
@@ -713,6 +736,7 @@ def build_parser():
     )
     encode_parser.add_argument(
         "text",
+        nargs="?",
         help="UTF-8 string to encode",
     )
     encode_parser.add_argument(
@@ -728,6 +752,7 @@ def build_parser():
     )
     decode_parser.add_argument(
         "text",
+        nargs="?",
         help="Mnemonic words separated by spaces",
     )
 
@@ -742,6 +767,12 @@ def main(argv=None):
 
     if args.command == "encode":
         text = args.text
+        if text is None:
+            text = getpass.getpass("Text to encode: ")
+            confirmation = getpass.getpass("Confirm text to encode: ")
+            if text != confirmation:
+                print("Error: input values do not match.")
+                return 1
         plates = args.plates
         mnemonic = r.encode(
             text.encode("utf-8"),
@@ -751,21 +782,37 @@ def main(argv=None):
         return 0
 
     if args.command == "decode":
-        mnemonic = parse_mnemonic_input(args.text)
+        text = args.text
+        if text is None:
+            mnemonic = prompt_mnemonic_input()
+        else:
+            mnemonic = parse_mnemonic_input(text)
         decoded = r.decode(mnemonic).decode("utf-8")
         print(decoded)
         return 0
 
     if args.encode_text is not None:
+        if args.encode_text == "":
+            text = getpass.getpass("Text to encode: ")
+            confirmation = getpass.getpass("Confirm text to encode: ")
+            if text != confirmation:
+                print("Error: input values do not match.")
+                return 1
+        else:
+            text = args.encode_text
         mnemonic = r.encode(
-            args.encode_text.encode("utf-8"),
+            text.encode("utf-8"),
             plates=args.plates,
         )
         print(" ".join(mnemonic))
         return 0
 
     if args.decode_text is not None:
-        mnemonic = parse_mnemonic_input(args.decode_text)
+        text = args.decode_text
+        if text == "":
+            mnemonic = prompt_mnemonic_input()
+        else:
+            mnemonic = parse_mnemonic_input(text)
         decoded = r.decode(mnemonic).decode("utf-8")
         print(decoded)
         return 0
