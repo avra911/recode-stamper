@@ -723,7 +723,7 @@ def build_parser():
         "--plates",
         type=int,
         choices=(12, 24),
-        help="Force 12 or 24 plates when encoding",
+        help="Force 12 or 24 plates when encoding, or use it during decoding to avoid prompting",
     )
 
     subparsers = parser.add_subparsers(
@@ -755,14 +755,51 @@ def build_parser():
         nargs="?",
         help="Mnemonic words separated by spaces",
     )
+    decode_parser.add_argument(
+        "--plates",
+        type=int,
+        choices=(12, 24),
+        help="Force 12 or 24 plates when decoding to avoid prompting",
+    )
 
     return parser
+
+
+def _normalize_flagged_text_args(argv):
+    """Reorder --encode/--decode with --plates so the text stays attached to the flag."""
+
+    if argv is None:
+        return None
+
+    args = list(argv)
+    i = 0
+    while i < len(args) - 3:
+        flag = args[i]
+        if flag in ("--encode", "--decode") and args[i + 1] == "--plates":
+            plates_value = args[i + 2]
+            text_value = args[i + 3]
+
+            if text_value.startswith("-"):
+                i += 1
+                continue
+
+            args = (
+                args[:i]
+                + [flag, text_value, "--plates", plates_value]
+                + args[i + 4 :]
+            )
+            i += 1
+        else:
+            i += 1
+
+    return args
 
 
 def main(argv=None):
     """Run the CLI."""
 
     parser = build_parser()
+    argv = _normalize_flagged_text_args(argv)
     args = parser.parse_args(argv)
 
     if args.command == "encode":
@@ -784,9 +821,24 @@ def main(argv=None):
     if args.command == "decode":
         text = args.text
         if text is None:
-            mnemonic = prompt_mnemonic_input()
+            if args.plates is not None:
+                word_count = args.plates
+                mnemonic = [
+                    getpass.getpass(f"Word {position}/{word_count}: ")
+                    for position in range(1, word_count + 1)
+                ]
+            else:
+                mnemonic = prompt_mnemonic_input()
         else:
             mnemonic = parse_mnemonic_input(text)
+            if args.plates is not None and len(mnemonic) != args.plates:
+                raise ValueError(
+                    f"Provided mnemonic has {len(mnemonic)} words but --plates={args.plates} expects {args.plates}"
+                )
+        if args.plates is not None and len(mnemonic) != args.plates:
+            raise ValueError(
+                f"Provided mnemonic has {len(mnemonic)} words but --plates={args.plates} expects {args.plates}"
+            )
         decoded = r.decode(mnemonic).decode("utf-8")
         print(decoded)
         return 0
@@ -810,9 +862,20 @@ def main(argv=None):
     if args.decode_text is not None:
         text = args.decode_text
         if text == "":
-            mnemonic = prompt_mnemonic_input()
+            if args.plates is not None:
+                word_count = args.plates
+                mnemonic = [
+                    getpass.getpass(f"Word {position}/{word_count}: ")
+                    for position in range(1, word_count + 1)
+                ]
+            else:
+                mnemonic = prompt_mnemonic_input()
         else:
             mnemonic = parse_mnemonic_input(text)
+        if args.plates is not None and len(mnemonic) != args.plates:
+            raise ValueError(
+                f"Provided mnemonic has {len(mnemonic)} words but --plates={args.plates} expects {args.plates}"
+            )
         decoded = r.decode(mnemonic).decode("utf-8")
         print(decoded)
         return 0

@@ -124,3 +124,18 @@ def test_forces_24_plates_for_short_data():
     mnemonic = r.encode(secret, plates=24)
     assert len(mnemonic) == 24
     assert r.decode(mnemonic) == secret
+
+
+def test_decode_skips_prompt_when_plates_are_specified(monkeypatch):
+    import recode_stamper
+
+    mnemonic = recode_stamper.r.encode(b"secret", plates=12)
+
+    def fail_prompt():
+        raise AssertionError("decode should not ask for word count when --plates is provided")
+
+    monkeypatch.setattr(recode_stamper, "prompt_mnemonic_input", fail_prompt)
+    monkeypatch.setattr(recode_stamper.getpass, "getpass", fail_prompt)
+
+    result = recode_stamper.main(["--decode", "--plates", "12", " ".join(mnemonic)])
+    assert result == 0
