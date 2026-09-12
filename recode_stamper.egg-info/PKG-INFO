@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: recode-stamper
-Version: 0.1.4
+Version: 0.1.5
 Summary: Encode and decode UTF-8 strings into a 12- or 24-word RECODE mnemonic.
 Author-email: avra911 <java-hug-circulate@duck.com>
 License: MIT License
@@ -43,7 +43,7 @@ A small Python utility that encodes UTF-8 text into a 12- or 24-word mnemonic (R
 ## Install from PyPI
 
 ```bash
-pip install recode-stamper==0.1.2
+pip install recode-stamper
 ```
 
 ## Quick start

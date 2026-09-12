@@ -5,7 +5,7 @@ A small Python utility that encodes UTF-8 text into a 12- or 24-word mnemonic (R
 ## Install from PyPI
 
 ```bash
-pip install recode-stamper==0.1.2
+pip install recode-stamper
 ```
 
 ## Quick start
