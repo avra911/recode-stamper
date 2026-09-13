@@ -82,6 +82,8 @@ The file `wordlist4096.txt` is based on the public wordlist from:
 
 https://raw.githubusercontent.com/kklash/wordlist4096/main/wordlist4096.txt
 
+Also check the [12-bit representation](./wordlist4096.md) of each of the 4,096 words.
+
 ## License
 
 This project is licensed under the MIT License. See [LICENSE](LICENSE) for the full text.
