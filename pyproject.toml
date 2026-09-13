@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "recode-stamper"
-version = "0.1.6"
+version = "0.1.7"
 description = "Encode and decode UTF-8 strings into a 12- or 24-word RECODE mnemonic."
 readme = "README.md"
 requires-python = ">=3.9"

@@ -82,7 +82,7 @@ The file `wordlist4096.txt` is based on the public wordlist from:
 
 https://raw.githubusercontent.com/kklash/wordlist4096/main/wordlist4096.txt
 
-Also check the [12-bit representation](./wordlist4096.md) of each of the 4,096 words.
+Also check the [12-bit representation](https://github.com/avra911/recode-stamper/blob/main/wordlist4096.md) of each of the 4,096 words.
 
 ## License
 
