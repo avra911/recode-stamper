@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: recode-stamper
-Version: 0.1.7
+Version: 0.1.8
 Summary: Encode and decode UTF-8 strings into a 12- or 24-word RECODE mnemonic.
 Author-email: avra911 <java-hug-circulate@duck.com>
 License: MIT License
