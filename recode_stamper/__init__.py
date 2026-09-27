@@ -17,6 +17,8 @@ import hashlib
 from pathlib import Path
 import getpass
 
+from .plate import bits_to_plate
+
 
 class Recode:
     """
@@ -676,6 +678,25 @@ def parse_mnemonic_input(raw_text):
     ]
 
 
+def print_mnemonic_plates(mnemonic, words_per_side=12):
+    """Print the mnemonic as it would appear stamped on physical plates."""
+
+    bits = "".join(
+        r.index_to_bits(r.word_to_index[word])
+        for word in mnemonic
+    )
+
+    bits_per_side = words_per_side * r.WORD_BITS
+    sides = [
+        bits[i:i + bits_per_side]
+        for i in range(0, len(bits), bits_per_side)
+    ]
+
+    for side_number, side_bits in enumerate(sides, start=1):
+        print(f"Side {side_number}/{len(sides)}")
+        print(bits_to_plate(side_bits))
+
+
 def prompt_mnemonic_input():
     """Prompt for each mnemonic word without echoing it."""
 
@@ -816,6 +837,7 @@ def main(argv=None):
             plates=plates,
         )
         print(" ".join(mnemonic))
+        print_mnemonic_plates(mnemonic)
         return 0
 
     if args.command == "decode":
@@ -857,6 +879,7 @@ def main(argv=None):
             plates=args.plates,
         )
         print(" ".join(mnemonic))
+        print_mnemonic_plates(mnemonic)
         return 0
 
     if args.decode_text is not None:

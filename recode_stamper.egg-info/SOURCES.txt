@@ -3,6 +3,8 @@ MANIFEST.in
 README.md
 pyproject.toml
 recode_stamper/__init__.py
+recode_stamper/checksum.py
+recode_stamper/plate.py
 recode_stamper/wordlist4096.txt
 recode_stamper.egg-info/PKG-INFO
 recode_stamper.egg-info/SOURCES.txt
